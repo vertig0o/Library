@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   FormControl,
   Container,
+  Box,
 } from "@mui/material";
 import { IData } from "../Data";
 
@@ -16,13 +17,44 @@ interface SüreçlerProps {
 const Süreçler: React.FC<SüreçlerProps> = ({ data }) => {
   const [selectedProcess, setSelectedProcess] = useState<string | null>(null);
 
-  const handleProcessChange = (value: string) => {
-    setSelectedProcess(value);
+  const handleProcessChange = (value: string | null) => {
+    setSelectedProcess(value === selectedProcess ? null : value);
+  };
+
+  const handleShowAllProcesses = () => {
+    setSelectedProcess(selectedProcess === "All" ? null : "All");
   };
 
   return (
     <Container>
-      <h1 style={{ color: "white" }}>Süreçler</h1>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h1 style={{ color: "white" }}>Süreçler</h1>
+        <FormControlLabel
+          value="All"
+          control={
+            <Radio
+              disabled={selectedProcess !== null && selectedProcess !== "All"}
+              checked={selectedProcess === "All"}
+              onChange={() => handleShowAllProcesses()}
+            />
+          }
+          label={
+            <Link
+              to={`/process/All`}
+              onClick={handleShowAllProcesses}
+              style={{ color: "white", textDecoration: "none", width: "100%" }}
+            >
+              <Box sx={{ width: "100%" }}>Hepsini Getir</Box>
+            </Link>
+          }
+        />
+      </Box>
 
       <FormControl component="fieldset">
         <RadioGroup
@@ -30,6 +62,7 @@ const Süreçler: React.FC<SüreçlerProps> = ({ data }) => {
           name="process"
           value={selectedProcess || ""}
           onChange={(event) => handleProcessChange(event.target.value)}
+          role="link"
         >
           {Array.from(new Set(data.map((item) => item.Süreç))).map(
             (uniqueProcess, index) => (
@@ -37,13 +70,18 @@ const Süreçler: React.FC<SüreçlerProps> = ({ data }) => {
                 key={index}
                 value={uniqueProcess}
                 control={<Radio />}
+                checked={selectedProcess === uniqueProcess}
                 label={
                   <Link
                     to={`/process/${uniqueProcess}`}
                     onClick={() => handleProcessChange(uniqueProcess)}
-                    style={{ color: "white", textDecoration: "none" }}
+                    style={{
+                      color: "white",
+                      textDecoration: "none",
+                      width: "100%",
+                    }}
                   >
-                    {uniqueProcess}
+                    <Box sx={{ width: "100%" }}>{uniqueProcess}</Box>
                   </Link>
                 }
               />

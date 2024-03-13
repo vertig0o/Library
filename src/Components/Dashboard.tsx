@@ -54,7 +54,7 @@ const AppBar = styled(MuiAppBar, {
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  padding: theme.spacing(0, 15),
+  padding: theme.spacing(0, 5),
   ...theme.mixins.toolbar,
 }));
 
@@ -76,7 +76,7 @@ const Dashboard: React.FC = () => {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            backgroundColor: "MediumBlue ",
+            backgroundColor: "navy ",
             color: "wheat",
           },
         }}

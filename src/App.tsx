@@ -35,6 +35,10 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/surecler" element={<Surecler data={data} />} />
+          <Route
+            path="/process/All"
+            element={<SurecDetaylari processData={data} />}
+          />
           {Object.keys(groupedData).map((uniqueProcess, index) => (
             <Route
               key={index}
